@@ -16,11 +16,13 @@ LDADD = \
 	$(GLIB_LIBS) \
 	$(NULL)
 
+if ENABLE_INSTALLED_TESTS
 noinst_PROGRAMS += 			\
 	pixbuf-read			\
 	pixbuf-random			\
 	pixbuf-lowmem			\
 	$(NULL)
+endif
 
 test_programs = 			\
 	animation			\
@@ -162,7 +164,9 @@ pixbuf_resource_SOURCES = 		\
 	resources.c			\
 	$(NULL)
 
+if ENABLE_INSTALLED_TESTS
 BUILT_SOURCES += resources.h resources.c
+endif
 DISTCLEANFILES += 			\
 	resources.h resources.c 	\
 	pixbuf-save-options		\
