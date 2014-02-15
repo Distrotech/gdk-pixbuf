@@ -88,8 +88,7 @@ DIST_COMMON = $(top_srcdir)/glib-tap.mk $(srcdir)/Makefile.in \
 	$(top_srcdir)/test-driver
 TESTS = $(am__EXEEXT_2)
 installed_test_PROGRAMS = $(am__EXEEXT_5)
-noinst_PROGRAMS = $(am__EXEEXT_6) pixbuf-read$(EXEEXT) \
-	pixbuf-lowmem$(EXEEXT) pixbuf-random$(EXEEXT) $(am__EXEEXT_1)
+noinst_PROGRAMS = $(am__EXEEXT_6) $(am__EXEEXT_7)
 check_PROGRAMS = $(am__EXEEXT_4)
 @ENABLE_ALWAYS_BUILD_TESTS_TRUE@am__append_1 = $(all_test_ltlibs)
 @ENABLE_ALWAYS_BUILD_TESTS_TRUE@am__append_2 = $(all_test_programs)
@@ -116,6 +115,13 @@ check_PROGRAMS = $(am__EXEEXT_4)
 @ENABLE_INSTALLED_TESTS_TRUE@	$(dist_installed_test_data)
 @ENABLE_INSTALLED_TESTS_TRUE@am__append_12 = $(test_ltlibraries) $(installed_test_ltlibraries)
 @ENABLE_INSTALLED_TESTS_TRUE@am__append_13 = $(installed_test_meta_DATA)
+@ENABLE_INSTALLED_TESTS_TRUE@am__append_14 = \
+@ENABLE_INSTALLED_TESTS_TRUE@	pixbuf-read			\
+@ENABLE_INSTALLED_TESTS_TRUE@	pixbuf-lowmem			\
+@ENABLE_INSTALLED_TESTS_TRUE@	pixbuf-random			\
+@ENABLE_INSTALLED_TESTS_TRUE@	$(NULL)
+
+@ENABLE_INSTALLED_TESTS_TRUE@am__append_15 = resources.h resources.c
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
@@ -177,6 +183,10 @@ am__EXEEXT_3 = $(am__EXEEXT_2)
 @ENABLE_ALWAYS_BUILD_TESTS_FALSE@am__EXEEXT_4 = $(am__EXEEXT_3)
 @ENABLE_INSTALLED_TESTS_TRUE@am__EXEEXT_5 = $(am__EXEEXT_2)
 @ENABLE_ALWAYS_BUILD_TESTS_TRUE@am__EXEEXT_6 = $(am__EXEEXT_3)
+@ENABLE_INSTALLED_TESTS_TRUE@am__EXEEXT_7 = pixbuf-read$(EXEEXT) \
+@ENABLE_INSTALLED_TESTS_TRUE@	pixbuf-lowmem$(EXEEXT) \
+@ENABLE_INSTALLED_TESTS_TRUE@	pixbuf-random$(EXEEXT) \
+@ENABLE_INSTALLED_TESTS_TRUE@	$(am__EXEEXT_1)
 PROGRAMS = $(installed_test_PROGRAMS) $(noinst_PROGRAMS)
 animation_SOURCES = animation.c
 animation_OBJECTS = animation.$(OBJEXT)
@@ -725,7 +735,7 @@ LOG_COMPILER = $(top_srcdir)/tap-test
 NULL = 
 
 # initialize variables for unconditional += appending
-BUILT_SOURCES = resources.h resources.c
+BUILT_SOURCES = $(am__append_15)
 BUILT_EXTRA_DIST = 
 CLEANFILES = *.log *.trs $(am__append_13)
 DISTCLEANFILES = resources.h resources.c pixbuf-save-options \
