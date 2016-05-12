@@ -115,13 +115,10 @@ int
 main ()
 {
   unsigned int major, minor, micro;
-  char *tmp_version;
 
   fclose (fopen ("conf.glibtest", "w"));
 
-  /* HP/UX 9 (%@#!) writes to sscanf strings */
-  tmp_version = g_strdup("$min_glib_version");
-  if (sscanf(tmp_version, "%u.%u.%u", &major, &minor, &micro) != 3) {
+  if (sscanf("$min_glib_version", "%u.%u.%u", &major, &minor, &micro) != 3) {
      printf("%s, bad version string\n", "$min_glib_version");
      exit(1);
    }
@@ -434,6 +431,21 @@ AC_SUBST([noarch_pkgconfigdir], [$with_noarch_pkgconfigdir])
 m4_popdef([pkg_default])
 m4_popdef([pkg_description])
 ]) dnl PKG_NOARCH_INSTALLDIR
+
+
+# PKG_CHECK_VAR(VARIABLE, MODULE, CONFIG-VARIABLE,
+# [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# -------------------------------------------
+# Retrieves the value of the pkg-config variable for the given module.
+AC_DEFUN([PKG_CHECK_VAR],
+[AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+AC_ARG_VAR([$1], [value of $3 for $2, overriding pkg-config])dnl
+
+_PKG_CONFIG([$1], [variable="][$3]["], [$2])
+AS_VAR_COPY([$1], [pkg_cv_][$1])
+
+AS_VAR_IF([$1], [""], [$5], [$4])dnl
+])# PKG_CHECK_VAR
 
 # Copyright (C) 2002-2013 Free Software Foundation, Inc.
 #
@@ -1200,38 +1212,6 @@ else
   am_missing_run=
   AC_MSG_WARN(['missing' script is too old or missing])
 fi
-])
-
-# Copyright (C) 2003-2013 Free Software Foundation, Inc.
-#
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
-
-# AM_PROG_MKDIR_P
-# ---------------
-# Check for 'mkdir -p'.
-AC_DEFUN([AM_PROG_MKDIR_P],
-[AC_PREREQ([2.60])dnl
-AC_REQUIRE([AC_PROG_MKDIR_P])dnl
-dnl FIXME we are no longer going to remove this! adjust warning
-dnl FIXME message accordingly.
-AC_DIAGNOSE([obsolete],
-[$0: this macro is deprecated, and will soon be removed.
-You should use the Autoconf-provided 'AC][_PROG_MKDIR_P' macro instead,
-and use '$(MKDIR_P)' instead of '$(mkdir_p)'in your Makefile.am files.])
-dnl Automake 1.8 to 1.9.6 used to define mkdir_p.  We now use MKDIR_P,
-dnl while keeping a definition of mkdir_p for backward compatibility.
-dnl @MKDIR_P@ is magic: AC_OUTPUT adjusts its value for each Makefile.
-dnl However we cannot define mkdir_p as $(MKDIR_P) for the sake of
-dnl Makefile.ins that do not define MKDIR_P, so we do our own
-dnl adjustment using top_builddir (which is defined more often than
-dnl MKDIR_P).
-AC_SUBST([mkdir_p], ["$MKDIR_P"])dnl
-case $mkdir_p in
-  [[\\/$]]* | ?:[[\\/]]*) ;;
-  */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
-esac
 ])
 
 # Helper functions for option handling.                     -*- Autoconf -*-

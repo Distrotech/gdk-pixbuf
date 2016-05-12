@@ -153,7 +153,6 @@ FGREP = @FGREP@
 GCOV = @GCOV@
 GDK_PIXBUF_API_VERSION = @GDK_PIXBUF_API_VERSION@
 GDK_PIXBUF_BINARY_VERSION = @GDK_PIXBUF_BINARY_VERSION@
-GDK_PIXBUF_CSOURCE = @GDK_PIXBUF_CSOURCE@
 GDK_PIXBUF_DEP_CFLAGS = @GDK_PIXBUF_DEP_CFLAGS@
 GDK_PIXBUF_DEP_LIBS = @GDK_PIXBUF_DEP_LIBS@
 GDK_PIXBUF_EXTRA_CFLAGS = @GDK_PIXBUF_EXTRA_CFLAGS@
@@ -183,7 +182,6 @@ GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
 GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
-GTK_UPDATE_ICON_CACHE = @GTK_UPDATE_ICON_CACHE@
 HTML_DIR = @HTML_DIR@
 INCLUDED_LOADER_DEFINE = @INCLUDED_LOADER_DEFINE@
 INCLUDED_LOADER_OBJ = @INCLUDED_LOADER_OBJ@
@@ -320,22 +318,26 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+GENERATED_ITEMS = \
+	gdk-pixbuf.vcproj	\
+	gdk-pixbuf-install.vsprops
+
 EXTRA_DIST = \
 	README.txt	\
 	gdk-pixbuf.sln	\
 	gdk-pixbuf-version-paths.vsprops	\
 	gdk-pixbuf-build-defines.vsprops	\
 	gdk-pixbuf-gen-srcs.vsprops	\
-	gdk-pixbuf-gengir.vsprops	\
-	gdk-pixbuf-install.vsprops	\
-	gdk-pixbuf.vcproj	\
+	gdk-pixbuf-install.vspropsin	\
 	gdk-pixbuf.vcprojin	\
 	gdk-pixbuf-csource.vcproj	\
 	gdk-pixbuf-query-loaders.vcproj	\
 	gdk-pixbuf-pixdata.vcproj	\
-	install.vcproj	\
-	gengir.vcproj
+	gdk-pixbuf-install.vcproj	\
+	$(GENERATED_ITEMS)		\
+	math.h
 
+DISTCLEANFILES = $(GENERATED_ITEMS)
 all: all-am
 
 .SUFFIXES:
@@ -442,6 +444,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -526,6 +529,10 @@ uninstall-am:
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags-am uninstall uninstall-am
 
+
+gdk-pixbuf-install.vsprops: $(top_srcdir)/build/win32/vs9/gdk-pixbuf-install.vspropsin gdk-pixbuf.headers
+	$(CPP) -P - <$(top_srcdir)/build/win32/vs9/gdk-pixbuf-install.vspropsin >$@
+	rm gdk-pixbuf.headers
 
 -include $(top_srcdir)/git.mk
 

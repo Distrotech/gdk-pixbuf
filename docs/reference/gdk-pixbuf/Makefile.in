@@ -191,7 +191,6 @@ FGREP = @FGREP@
 GCOV = @GCOV@
 GDK_PIXBUF_API_VERSION = @GDK_PIXBUF_API_VERSION@
 GDK_PIXBUF_BINARY_VERSION = @GDK_PIXBUF_BINARY_VERSION@
-GDK_PIXBUF_CSOURCE = @GDK_PIXBUF_CSOURCE@
 GDK_PIXBUF_DEP_CFLAGS = @GDK_PIXBUF_DEP_CFLAGS@
 GDK_PIXBUF_DEP_LIBS = @GDK_PIXBUF_DEP_LIBS@
 GDK_PIXBUF_EXTRA_CFLAGS = @GDK_PIXBUF_EXTRA_CFLAGS@
@@ -221,7 +220,6 @@ GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
 GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
-GTK_UPDATE_ICON_CACHE = @GTK_UPDATE_ICON_CACHE@
 HTML_DIR = @HTML_DIR@
 INCLUDED_LOADER_DEFINE = @INCLUDED_LOADER_DEFINE@
 INCLUDED_LOADER_OBJ = @INCLUDED_LOADER_OBJ@
@@ -384,7 +382,6 @@ IGNORE_HFILES = \
 	pixops				\
 	gdk-pixbuf-alias.h		\
 	gdk-pixbuf-marshal.h		\
-	gdk-pixbuf-i18n.h 		\
 	gdk-pixbuf-private.h		\
 	gdk-pixbuf-xlib-private.h	\
 	io-gif-animation.h		\
@@ -406,7 +403,6 @@ GTKDOC_LIBS = \
 # Extra options to supply to gtkdoc-mkdb
 MKDB_OPTIONS = \
 	--main-sgml-file=$(DOC_MAIN_SGML_FILE) 	\
-	--sgml-mode 				\
 	--source-dir=../../../contrib/gdk-pixbuf-xlib \
 	--output-format=xml 			\
 	--name-space=gdk_pixbuf

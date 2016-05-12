@@ -153,7 +153,6 @@ FGREP = @FGREP@
 GCOV = @GCOV@
 GDK_PIXBUF_API_VERSION = @GDK_PIXBUF_API_VERSION@
 GDK_PIXBUF_BINARY_VERSION = @GDK_PIXBUF_BINARY_VERSION@
-GDK_PIXBUF_CSOURCE = @GDK_PIXBUF_CSOURCE@
 GDK_PIXBUF_DEP_CFLAGS = @GDK_PIXBUF_DEP_CFLAGS@
 GDK_PIXBUF_DEP_LIBS = @GDK_PIXBUF_DEP_LIBS@
 GDK_PIXBUF_EXTRA_CFLAGS = @GDK_PIXBUF_EXTRA_CFLAGS@
@@ -183,7 +182,6 @@ GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
 GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
-GTK_UPDATE_ICON_CACHE = @GTK_UPDATE_ICON_CACHE@
 HTML_DIR = @HTML_DIR@
 INCLUDED_LOADER_DEFINE = @INCLUDED_LOADER_DEFINE@
 INCLUDED_LOADER_OBJ = @INCLUDED_LOADER_OBJ@
@@ -320,17 +318,19 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+GENERATED_ITEMS = \
+	gdk-pixbuf.vcxproj	\
+	gdk-pixbuf.vcxproj.filters	\
+	gdk-pixbuf-install.props
+
 EXTRA_DIST = \
 	README.txt	\
 	gdk-pixbuf.sln	\
 	gdk-pixbuf-version-paths.props	\
 	gdk-pixbuf-build-defines.props	\
 	gdk-pixbuf-gen-srcs.props	\
-	gdk-pixbuf-gengir.props	\
-	gdk-pixbuf-install.props	\
-	gdk-pixbuf.vcxproj	\
+	gdk-pixbuf-install.propsin	\
 	gdk-pixbuf.vcxprojin	\
-	gdk-pixbuf.vcxproj.filters	\
 	gdk-pixbuf.vcxproj.filtersin	\
 	gdk-pixbuf-csource.vcxproj	\
 	gdk-pixbuf-csource.vcxproj.filters	\
@@ -338,9 +338,11 @@ EXTRA_DIST = \
 	gdk-pixbuf-query-loaders.vcxproj.filters	\
 	gdk-pixbuf-pixdata.vcxproj	\
 	gdk-pixbuf-pixdata.vcxproj.filters	\
-	install.vcxproj	\
-	gengir.vcxproj
+	gdk-pixbuf-install.vcxproj	\
+	$(GENERATED_ITEMS)		\
+	math.h
 
+DISTCLEANFILES = $(GENERATED_ITEMS) math.h
 all: all-am
 
 .SUFFIXES:
@@ -447,6 +449,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -531,6 +534,13 @@ uninstall-am:
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags-am uninstall uninstall-am
 
+
+gdk-pixbuf-install.props: $(top_srcdir)/build/win32/vs10/gdk-pixbuf-install.propsin gdk-pixbuf.vs10.headers
+	$(CPP) -P - <$(top_srcdir)/build/win32/vs10/gdk-pixbuf-install.propsin >$@
+	rm gdk-pixbuf.vs10.headers
+
+math.h: $(top_srcdir)/build/win32/vs9/math.h
+	cp $< $@
 
 -include $(top_srcdir)/git.mk
 
